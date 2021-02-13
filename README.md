@@ -62,7 +62,7 @@ Here are the schemas for each file:
 
 ## Results
 
-The main findings of this project can be found in my medium post about the project [here](https://johnabel1997.medium.com/starbucks-capstone-challenge-350575a03f9a).
+The main findings of this project can be found in my medium post about the project [here](https://chorin86.medium.com/how-to-maximize-the-gains-of-the-coupon-offers-to-customers-3098493355f6).
 
 I build a user-offer-matrix based on the transcript records, and then split the records into the training set and the test set and trained the FunkSVD model to predict how a user responses to a particular offer. The mean squared error of the trained user matrix and offer matrix is around 0.0015, and the squared error of the test prediction is around 0.1327.
 
