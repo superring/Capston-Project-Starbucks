@@ -1,32 +1,79 @@
-The repository must have a README.md file that communicates the libraries used, the motivation for the project, the files in the repository with a small description of each, a summary of the results of the analysis, and necessary acknowledgements.
+# Udacity Capstone Project: Starbucks
 
-# Data Scientist Capstone Project
+Final project for Udacity's Data Scientist Nanodegree.
 
-You can read the article from this [link](https://medium.com/@dzakyputra/analyzing-starbucks-offer-data-cd44d39366fd?source=friends_link&sk=b0bf48325e3fa0afef4a2cf99e350eb2).
+## Installation
 
-You can check the jupyter notebook in the `Data_Scientist_Capstone_Project.ipynb` to get the full code.
+In order to run the Jupyter notebook you will need to have python 3 installed and the following dependencies:
 
----
+- [pandas](https://pandas.pydata.org/)
+- [Numpy](https://numpy.org/)
+- [Matplotlib](https://matplotlib.org/)
+- [Seaborn](https://seaborn.pydata.org/)
 
-## Introduction
-For the Capstone Project, I chose the “Optimizing App Offers With Starbucks” project, which basically trying to solve the problem on how to send the offer to the right customers.
+## Project Motivation
 
-The complete step by step of my analysis are in the jupyter notebook, the medium article will show you the result of my analysis. For this project, I only focus on analyzing the “unnecessary offer” that was being sent. It is the offer that sent to the customers, and they didn’t see it, yet somehow they still completed it (the offer completed if the customers spend a certain amount of money in a certain period of time, no matter they saw the offer or not).
+In this project I conducted a exploratory analysis of the simulated data provided by Starbucks, to find out how people make purchasing decisions based on the discount or coupon offers they received. I also build a prediction model with FunkSVD algorithm to predict the responsiveness of the users toward the offers.
 
-## Questions
-These are the questions I am trying to solve:
-1. How much we loss because of the “unnecessary offer”?
-2. What kind of customers that often completed the offer without viewing it?
-3. How is the income differentiate between customers type?
+There are 2 questions we are interested:
 
-## Conclusion
-Based on the analysis, there are several things we can conclude.
-1. With the unplanned offer, <b>we can “loss” up to $49,032 of revenue in a month or $588,384 of revenue in a year. So the target marketing of our offer is very important and plays a huge roll</b>.
-2. <b>Female customers tend to spend more than Male customers, with the average spending per transaction is $16,3 compared to $10,4 respectively</b>. Female customers also have tendency to complete the offer even without viewing it first, so we might want to be more careful in sending the offer to them.
-3. In overall, customers who complete the offer without viewing the offer first have the higher average income, <b>especially in discount offer where those who complete the offer without viewing it and those who viewed it have average income $71,060 and $67,642 respectively</b>.
+1. Which offer should be sent to a particular customer to maximize the offer's sales gain?
 
-## Recommendation and Future Improvements
-These are the things I recommend for future work based on the data analysis result:
-1. We need to be more careful in sending the offer, especially the BOGO offer where it contributes $31,230 loss in this experiment. One thing we can do is to stop giving the BOGO offer to the customers with the average purchase > 2 cups per transaction, because without giving them the offer they tend to purchase > 2 cups anyway so the BOGO offer seems not to important for them.
-2. Send less offer to the Female customers, especially discount offer. We can see from the data that the average spending of Female customers is $16,3. So we might want to increase the minimum spending for the offer we send to them, because it won’t make sense if we send them the offer with “difficulty” of $10, they would accomplish it anyway. So increase the minimum purchase to $20 or $25 would be better.
-3. We might want to customize the “difficulty” based on the level of income for each customer, so that people with the higher income have the higher “difficulty” as well.
+2. Which demographic groups respond best to which offer type?
+
+
+## File Descriptions
+
+The analysis and predictive models are available in the Jupyter Notebook.
+
+The datasets are a simplified version of the real Starbucks app because the data only contains information regarding one product whereas Starbucks has a whole line of products.
+
+The data given to us was stored in 3 json files:
+
+- `portfolio.json` - containing offer ids and data regarding the offer: duration, difficutlty and type.
+- `Profile.json`  data containing demographic information for each customer.
+- `transcript.json` - data containing every record for transaction, offers recieved, offers reviewed and offers completed.
+
+Here are the schemas for each file:
+
+`Portfolio.json`
+
+- offer_id (string) - offer id
+- offer type (string) - the type of offer: Informational, Discount, BOGO.
+- difficulty (int) - minimum required to spend to complete an offer.
+- reward (int) - the reward is given for completing the offer.
+- duration (int) - time for the offer to be open in days.
+- channels (list of strings)
+
+`Profile.json`
+
+- age (int) - age of the user
+- become_member_on (int) - integer referring to the date the customer created an account.
+- gender (string) - gender of the customer (Male, Female, Other)
+- id (str) - customer id
+- income (float) - customers income
+
+`Transcript.json`
+
+- event (string) - record description (transaction, offer received, offer completed, offer viewed)
+- person (string) - customer_id
+- time (int) - time in hours since the start of the test. 
+- value (dictionary containing strings) - contains either offer id, amount or reward depending on the event.
+
+## Results
+
+The main findings of this project can be found in my medium post about the project [here](https://johnabel1997.medium.com/starbucks-capstone-challenge-350575a03f9a).
+
+I build a user-offer-matrix based on the transcript records, and then split the records into the training set and the test set and trained the FunkSVD model to predict how a user responses to a particular offer. The mean squared error of the trained user matrix and offer matrix is around 0.0015, and the squared error of the test prediction is around 0.1327.
+
+In the exploratory analysis of the responsiveness from different demographic groups to the offers, I found that females respond better than males in both BOGO and discount. Also I found taht people tend to response to social channel better than mobile, email and web. I also found that people with higher income tend to respond better than those with lower income. Also among all the income levels, except those with 80000+$ income, tend to discount better than BOGO. The last finding is that younger people less than 30 years old tend to respond worse than older people.
+
+## Licensing, Authors and Acknowlegements
+
+Thansk Starbucks and Udacity for providing the data in this project.
+
+
+
+
+
+
